@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:hervigen/Components/MyWidget.dart';
 import 'package:hervigen/Service/Font_Style.dart';
@@ -25,7 +27,7 @@ class _RegisterPagesState extends State<RegisterPages> {
         elevation: 0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_left_sharp),
+          icon: const Icon(Icons.arrow_left_sharp),
           color: Colors.white,
           iconSize: 40,
           onPressed: () {},
@@ -43,7 +45,7 @@ class _RegisterPagesState extends State<RegisterPages> {
             Container(
               alignment: Alignment.topLeft,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Text(
                 "Daftar",
                 style: registerTitleStyle,
@@ -75,7 +77,7 @@ class _RegisterPagesState extends State<RegisterPages> {
                     passwordController.text,
                   );
                 },
-                child: Text("Register"))
+                child: const Text("Register"))
           ],
         ),
       ),
