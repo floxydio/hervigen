@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class ServiceApi {
-  var baseURL = "https://vigenesia.org/";
+  var baseURL = "http://vigenesia.org/";
+
 
   var dio = Dio();
 
