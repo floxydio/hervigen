@@ -82,11 +82,11 @@ class _RegisterPagesState extends State<RegisterPages> {
                   ServiceApi()
                       .signUp(
                         namaController.text,
-                        emailController.text,
                         profesiController.text,
+                        emailController.text,
                         passwordController.text,
                       )
-                      .then((value) => Navigator.push(
+                      .then((value) => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (_) => const AuthPagesLogin())));
