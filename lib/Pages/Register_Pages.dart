@@ -17,16 +17,6 @@ class _RegisterPagesState extends State<RegisterPages> {
   TextEditingController emailController = TextEditingController();
   TextEditingController profesiController = TextEditingController();
 
-  //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
-  @override
-  void dispose() {
-    namaController.dispose();
-    passwordController.dispose();
-    emailController.dispose();
-    profesiController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,11 +70,11 @@ class _RegisterPagesState extends State<RegisterPages> {
                   ServiceApi()
                       .signUp(
                         namaController.text,
-                        emailController.text,
                         profesiController.text,
+                        emailController.text,
                         passwordController.text,
                       )
-                      .then((value) => Navigator.push(
+                      .then((value) => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (_) => const AuthPagesLogin())));

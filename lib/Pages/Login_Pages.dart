@@ -16,14 +16,6 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
-  @override
-  void dispose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
