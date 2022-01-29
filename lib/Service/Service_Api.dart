@@ -1,16 +1,18 @@
+// ignore_for_file: file_names
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class ServiceApi {
-  var baseUrl = "http://vigenesia.org/";
+  var baseURL = "http://vigenesia.org/";
 
-  var url = Dio();
+  var dio = Dio();
 
   Future<dynamic> signIn(String email, String password) async {
     try {
       var formData = FormData.fromMap({"email": email, "password": password});
 
-      Response response = await url.post(baseUrl + "login", data: formData);
+      Response response = await dio.post(baseURL + "login", data: formData);
 
       if (response.statusCode == 200) {
         return response.data;
@@ -30,10 +32,7 @@ class ServiceApi {
     });
     try {
       Response response =
-          await url.post(baseUrl + "api/registrasi", data: formData);
-      if (kDebugMode) {
-        print(response.data);
-      }
+          await dio.post(baseURL + "api/registrasi", data: formData);
 
       if (response.statusCode == 200) {
         return response.data;
