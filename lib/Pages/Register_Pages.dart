@@ -1,9 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:hervigen/Components/MyWidget.dart';
-import 'package:hervigen/Service/Font_Style.dart';
-import 'package:hervigen/Service/Service_Api.dart';
+import 'package:hervigen/pages/login_pages.dart';
+import 'package:hervigen/widget/my_widget.dart';
+import 'package:hervigen/service/Font_Style.dart';
+import 'package:hervigen/service/Service_Api.dart';
 
 class RegisterPages extends StatefulWidget {
   const RegisterPages({Key? key}) : super(key: key);
@@ -15,10 +16,18 @@ class RegisterPages extends StatefulWidget {
 class _RegisterPagesState extends State<RegisterPages> {
   TextEditingController namaController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController profesiController = TextEditingController();
 
-  
+  //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
+  @override
+  void dispose() {
+    namaController.dispose();
+    passwordController.dispose();
+    emailController.dispose();
+    profesiController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +49,7 @@ class _RegisterPagesState extends State<RegisterPages> {
       ),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               alignment: Alignment.topLeft,
@@ -56,12 +65,12 @@ class _RegisterPagesState extends State<RegisterPages> {
               label: "Nama",
             ),
             MyInput(
-              controller: usernameController,
-              label: "Username",
-            ),
-            MyInput(
               controller: profesiController,
               label: "Profesi",
+            ),
+            MyInput(
+              controller: emailController,
+              label: "Email",
             ),
             MyInput(
               controller: passwordController,
@@ -70,12 +79,17 @@ class _RegisterPagesState extends State<RegisterPages> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  ServiceApi().signUp(
-                    namaController.text,
-                    usernameController.text,
-                    profesiController.text,
-                    passwordController.text,
-                  );
+                  ServiceApi()
+                      .signUp(
+                        namaController.text,
+                        profesiController.text,
+                        emailController.text,
+                        passwordController.text,
+                      )
+                      .then((value) => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const AuthPagesLogin())));
                 },
                 child: const Text("Register"))
           ],
