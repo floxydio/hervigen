@@ -21,14 +21,16 @@ class ServiceApi {
 
   Future<dynamic> signUp(
       String nama, String profesi, String email, String password) async {
+    var formData = FormData.fromMap({
+      "nama": nama,
+      "profesi": profesi,
+      "email": email,
+      "password": password
+    });
     try {
-      var formData = FormData.fromMap({
-        "nama": nama,
-        "profesi": profesi,
-        "email": email,
-        "password": password
-      });
-      Response response = await URL.post(BASE_URL + "registrasi");
+      Response response =
+          await URL.post(BASE_URL + "api/registrasi", data: formData);
+      print(response.data);
 
       if (response.statusCode == 200) {
         return response.data;
