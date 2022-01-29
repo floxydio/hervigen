@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class ServiceApi {
   var baseUrl = "http://vigenesia.org/";
@@ -21,8 +22,18 @@ class ServiceApi {
 
   Future<dynamic> signUp(
       String nama, String profesi, String email, String password) async {
+    var formData = FormData.fromMap({
+      "nama": nama,
+      "profesi": profesi,
+      "email": email,
+      "password": password
+    });
     try {
-      Response response = await url.post(baseUrl + "registrasi");
+      Response response =
+          await url.post(baseUrl + "api/registrasi", data: formData);
+      if (kDebugMode) {
+        print(response.data);
+      }
 
       if (response.statusCode == 200) {
         return response.data;
