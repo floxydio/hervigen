@@ -1,8 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
-var boardStyle =
-    GoogleFonts.rancho(fontSize: 40, color: const Color(0xff2498DB));
+var boardStyle = GoogleFonts.rancho(fontSize: 40, color: const Color(0xff2498DB));
 
 var boardWhiteStyle = GoogleFonts.rancho(fontSize: 40, color: Colors.white);
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hervigen/pages/login_pages.dart';
 import 'package:hervigen/widget/my_widget.dart';
-import 'package:hervigen/service/Font_Style.dart';
-import 'package:hervigen/service/Service_Api.dart';
+import 'package:hervigen/service/font_style.dart';
+import 'package:hervigen/service/service_api.dart';
 
 class RegisterPages extends StatefulWidget {
   const RegisterPages({Key? key}) : super(key: key);
