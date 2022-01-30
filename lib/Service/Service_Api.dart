@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 class ServiceApi {
   var baseURL = "http://vigenesia.org/";
 
-
   var dio = Dio();
 
   Future<dynamic> signIn(String email, String password) async {
@@ -27,11 +26,15 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> sendMotivation(String motivasi) async {
-    Map<String, dynamic> formData = {"isi_motivasi": motivasi};
+  Future<dynamic> sendMotivation(String motivasi, String idUser) async {
+    Map<String, dynamic> formData = {
+      "isi_motivasi": motivasi,
+      "iduser": idUser
+    };
     try {
-      Response response =
-          await dio.post(baseURL + "api/dev/POSTmotivasi", data: formData);
+      Response response = await dio.post(baseURL + "api/dev/POSTmotivasi",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
 
       if (kDebugMode) {
         print("Respon -> ${response.data} + ${response.statusCode}");
