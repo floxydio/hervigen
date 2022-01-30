@@ -40,62 +40,64 @@ class _RegisterPagesState extends State<RegisterPages> {
           style: boardStyle,
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-              child: Text(
-                "Daftar",
-                style: registerTitleStyle,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  "Daftar",
+                  style: registerTitleStyle,
+                ),
               ),
-            ),
-           Container(
-             alignment: Alignment.topLeft,
-             width: MediaQuery.of(context).size.width,
-             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-             child: Text("Setiap program menghubungkan data pengguna di program tersebut", style: blueText,),
-           ),
-            SizedBox(height: 15,),
-            MyInput(
-              controller: namaController,
-              label: "Nama",
-            ),
-            SizedBox(height: 15,),
-            MyInput(
-              controller: profesiController,
-              label: "Profesi",
-            ),
-             SizedBox(height: 15,),
-            MyInput(
-              controller: emailController,
-              label: "Email",
-            ),
-             SizedBox(height: 15,),
-            MyInput(
-              controller: passwordController,
-              password: true,
-              label: "Password",
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  ServiceApi()
-                      .signUp(
-                        namaController.text,
-                        profesiController.text,
-                        emailController.text,
-                        passwordController.text,
-                      )
-                      .then((value) => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const AuthPagesLogin())));
-                },
-                child: const Text("Register"))
-          ],
+             Container(
+               alignment: Alignment.topLeft,
+               width: MediaQuery.of(context).size.width,
+               padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+               child: Text("Setiap program menghubungkan data pengguna di program tersebut", style: blueText,),
+             ),
+              SizedBox(height: 15,),
+              MyInput(
+                controller: namaController,
+                label: "Nama",
+              ),
+              SizedBox(height: 15,),
+              MyInput(
+                controller: profesiController,
+                label: "Profesi",
+              ),
+               SizedBox(height: 15,),
+              MyInput(
+                controller: emailController,
+                label: "Email",
+              ),
+               SizedBox(height: 15,),
+              MyInput(
+                controller: passwordController,
+                password: true,
+                label: "Password",
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    ServiceApi()
+                        .signUp(
+                          namaController.text,
+                          profesiController.text,
+                          emailController.text,
+                          passwordController.text,
+                        )
+                        .then((value) => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const AuthPagesLogin())));
+                  },
+                  child: const Text("Register"))
+            ],
+          ),
         ),
       ),
     );
