@@ -57,6 +57,9 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
                                 builder: (_) => Menu(
                                       idUser: value["data"]["iduser"],
                                       email: value["data"]["email"],
+                                      nama: value["data"]["nama"],
+                                      password: value["data"]["password"],
+                                      profesi: value["data"]["profesi"],
                                     ))));
                   },
                   child: const Text("Login")),
