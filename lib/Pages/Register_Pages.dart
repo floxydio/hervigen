@@ -21,13 +21,6 @@ class _RegisterPagesState extends State<RegisterPages> {
 
   //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
   @override
-  void dispose() {
-    namaController.dispose();
-    passwordController.dispose();
-    emailController.dispose();
-    profesiController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

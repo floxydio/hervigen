@@ -65,7 +65,7 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Belum punya akun? ",
+                  "Belum Punya Akun?",
                   style: smallText,
                 ),
                 InkWell(
