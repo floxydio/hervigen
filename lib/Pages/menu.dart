@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hervigen/Pages/Profile.dart';
+import 'package:hervigen/pages/profile.dart';
 import 'package:hervigen/service/service_api.dart';
 
 class Menu extends StatefulWidget {
