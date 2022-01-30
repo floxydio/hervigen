@@ -83,7 +83,7 @@ class ServiceApi {
 
       if (response.statusCode == 200) {
         print(response.data);
-        return response.data as List;
+        return response.data;
       }
     } catch (e) {
       throw Exception(e);
@@ -103,6 +103,30 @@ class ServiceApi {
           await dio.post(baseURL + "api/registrasi", data: formData);
 
       if (response.statusCode == 200) {
+        return response.data;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<dynamic> editProfile(
+      dynamic idUser,
+      String nama, String profesi, String email, String password) async {
+    Map<String, dynamic> formData = {
+      "iduser" :idUser,
+      "nama": nama,
+      "profesi": profesi,
+      "email": email,
+      "password": password
+    };
+    try {
+      Response response = await dio.put(baseURL + "api/PUTprofile",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+
+      if (response.statusCode == 200) {
+        print("Respon Edit -> ${response.data}");
         return response.data;
       }
     } catch (e) {

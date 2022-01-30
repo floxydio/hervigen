@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:hervigen/Service/Font_Style.dart';
+import 'package:hervigen/Service/Service_Api.dart';
 
-class myProfile extends StatefulWidget {
-  const myProfile({ Key? key }) : super(key: key);
+class MyProfile extends StatefulWidget {
+  final dynamic idUser;
+  final String? email;
+  final String? profesi;
+  final String? password;
+  final String? nama;
+  const MyProfile(
+      {Key? key,
+      this.idUser,
+      this.email,
+      this.profesi,
+      this.password,
+      this.nama})
+      : super(key: key);
 
   @override
-  _myProfileState createState() => _myProfileState();
+  _MyProfileState createState() => _MyProfileState();
 }
 
-class _myProfileState extends State<myProfile> {  
+class _MyProfileState extends State<MyProfile> {
+  TextEditingController namaController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController profesiController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,25 +35,28 @@ class _myProfileState extends State<myProfile> {
       ),
       body: SingleChildScrollView(
         child: Column(
-         crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: Colors.grey,
               maxRadius: 25.0,
-              child: Icon(Icons.person,
-              color: Colors.white),
+              child: Icon(Icons.person, color: Colors.white),
             ),
-            SizedBox(height: 25,),
+            const SizedBox(
+              height: 25,
+            ),
             Row(
-              children: [
-              Text("Username"),
-            
-              ],
-            )
+              children: [],
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  ServiceApi()
+                      .editProfile("670", "Dio", "Makan", "ds@d.com", "123");
+                },
+                child: const Text("Edit"))
           ],
         ),
       ),
-      
     );
   }
 }
