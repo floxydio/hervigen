@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/pages/login_pages.dart';
 import 'package:hervigen/widget/my_widget.dart';
-import 'package:hervigen/service/font_style.dart';
-import 'package:hervigen/service/service_api.dart';
+import 'package:hervigen/service/Service_Api.dart';
 
 class RegisterPages extends StatefulWidget {
   const RegisterPages({Key? key}) : super(key: key);
@@ -35,52 +35,63 @@ class _RegisterPagesState extends State<RegisterPages> {
           style: boardStyle,
         ),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-              child: Text(
-                "Daftar",
-                style: registerTitleStyle,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: Text(
+                  "Daftar",
+                  style: registerTitleStyle,
+                ),
               ),
-            ),
-            MyInput(
-              controller: namaController,
-              label: "Nama",
-            ),
-            MyInput(
-              controller: profesiController,
-              label: "Profesi",
-            ),
-            MyInput(
-              controller: emailController,
-              label: "Email",
-            ),
-            MyInput(
-              controller: passwordController,
-              password: true,
-              label: "Password",
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  ServiceApi()
-                      .signUp(
-                        namaController.text,
-                        profesiController.text,
-                        emailController.text,
-                        passwordController.text,
-                      )
-                      .then((value) => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const AuthPagesLogin())));
-                },
-                child: const Text("Register"))
-          ],
+              Container(
+                alignment: Alignment.topLeft,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 15),
+                child: Text(
+                  "Setiap program menghubungkan data pengguna di program tersebut",
+                  style: blueText,
+                ),
+              ),
+              MyInput(
+                controller: namaController,
+                label: "Nama",
+              ),
+              MyInput(
+                controller: profesiController,
+                label: "Profesi",
+              ),
+              MyInput(
+                controller: emailController,
+                label: "Email",
+              ),
+              MyInput(
+                controller: passwordController,
+                password: true,
+                label: "Password",
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    ServiceApi()
+                        .signUp(
+                          namaController.text,
+                          profesiController.text,
+                          emailController.text,
+                          passwordController.text,
+                        )
+                        .then((value) => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const AuthPagesLogin())));
+                  },
+                  child: const Text("Register"))
+            ],
+          ),
         ),
       ),
     );

@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 class ServiceApi {
   var baseURL = "http://vigenesia.org/";
 
-
   var dio = Dio();
 
   Future<dynamic> signIn(String email, String password) async {
@@ -27,11 +26,15 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> sendMotivation(String motivasi) async {
-    Map<String, dynamic> formData = {"isi_motivasi": motivasi};
+  Future<dynamic> sendMotivation(String motivasi, String idUser) async {
+    Map<String, dynamic> formData = {
+      "isi_motivasi": motivasi,
+      "iduser": idUser
+    };
     try {
-      Response response =
-          await dio.post(baseURL + "api/dev/POSTmotivasi", data: formData);
+      Response response = await dio.post(baseURL + "api/dev/POSTmotivasi",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
 
       if (kDebugMode) {
         print("Respon -> ${response.data} + ${response.statusCode}");
@@ -86,7 +89,7 @@ class ServiceApi {
         if (kDebugMode) {
           print(response.data);
         }
-        return response.data as List;
+        return response.data;
       }
     } catch (e) {
       throw Exception(e);
@@ -106,6 +109,32 @@ class ServiceApi {
           await dio.post(baseURL + "api/registrasi", data: formData);
 
       if (response.statusCode == 200) {
+        return response.data;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<dynamic> editProfile(
+      dynamic idUser,
+      String nama, String profesi, String email, String password) async {
+    Map<String, dynamic> formData = {
+      "iduser" :idUser,
+      "nama": nama,
+      "profesi": profesi,
+      "email": email,
+      "password": password
+    };
+    try {
+      Response response = await dio.put(baseURL + "api/PUTprofile",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
+
+      if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print("Respon Edit -> ${response.data}");
+        }
         return response.data;
       }
     } catch (e) {
