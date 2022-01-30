@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/pages/menu.dart';
 import 'package:hervigen/pages/register_pages.dart';
-import 'package:hervigen/service/font_style.dart';
+import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/service/service_api.dart';
 import 'package:hervigen/widget/my_widget.dart';
 
@@ -17,12 +18,6 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
   TextEditingController passwordController = TextEditingController();
 
   //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
-  @override
-  void dispose() {
-    usernameController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +31,8 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.only(bottom: 15.0),
               child: Text(
-                "Login",
-                style: registerTitleStyle,
+                "Vigenesia",
+                style: boardStyle,
               ),
             ),
             // widget reusable => agar penggunaan widget lebih efisien

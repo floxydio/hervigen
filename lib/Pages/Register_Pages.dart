@@ -1,9 +1,10 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/pages/login_pages.dart';
 import 'package:hervigen/widget/my_widget.dart';
-import 'package:hervigen/service/Font_Style.dart';
+import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/service/Service_Api.dart';
 
 class RegisterPages extends StatefulWidget {
@@ -21,7 +22,6 @@ class _RegisterPagesState extends State<RegisterPages> {
 
   //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
   @override
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,18 +53,28 @@ class _RegisterPagesState extends State<RegisterPages> {
                 style: registerTitleStyle,
               ),
             ),
+           Container(
+             alignment: Alignment.topLeft,
+             width: MediaQuery.of(context).size.width,
+             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+             child: Text("Setiap program menghubungkan data pengguna di program tersebut", style: blueText,),
+           ),
+            SizedBox(height: 15,),
             MyInput(
               controller: namaController,
               label: "Nama",
             ),
+            SizedBox(height: 15,),
             MyInput(
               controller: profesiController,
               label: "Profesi",
             ),
+             SizedBox(height: 15,),
             MyInput(
               controller: emailController,
               label: "Email",
             ),
+             SizedBox(height: 15,),
             MyInput(
               controller: passwordController,
               password: true,

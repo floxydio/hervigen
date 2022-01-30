@@ -14,4 +14,8 @@ var registerTitleStyle = GoogleFonts.poppins(
     fontSize: 37, fontWeight: FontWeight.w600, color: const Color(0xff2498DB));
 
 var registersubheadingStyle =
-    GoogleFonts.poppins(fontSize: 14, color: const  Color(0xffB5B5B5));
+    GoogleFonts.poppins(fontSize: 14, color: const Color(0xffB5B5B5));
+
+var smallText = GoogleFonts.poppins(fontSize: 12, color: Colors.black);
+
+var blueText = GoogleFonts.poppins(fontSize: 12, color: const Color(0xff2498DB));
