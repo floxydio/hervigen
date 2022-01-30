@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hervigen/Service/Font_Style.dart';
-import 'package:hervigen/pages/menu.dart';
-import 'package:hervigen/pages/register_pages.dart';
+import 'package:hervigen/Pages/menu.dart';
+import 'package:hervigen/Pages/register_pages.dart';
 import 'package:hervigen/Service/Font_Style.dart';
-import 'package:hervigen/service/service_api.dart';
+import 'package:hervigen/Service/service_api.dart';
 import 'package:hervigen/widget/my_widget.dart';
 
 class AuthPagesLogin extends StatefulWidget {
@@ -51,8 +51,13 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
                     ServiceApi()
                         .signIn(
                             usernameController.text, passwordController.text)
-                        .then((value) => Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => const Menu())));
+                        .then((value) => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => Menu(
+                                      idUser: value["data"]["iduser"],
+                                      email: value["data"]["email"],
+                                    ))));
                   },
                   child: const Text("Login")),
             ),
