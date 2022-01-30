@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hervigen/pages/menu.dart';
-import 'package:hervigen/pages/register_pages.dart';
-import 'package:hervigen/service/font_style.dart';
-import 'package:hervigen/service/service_api.dart';
+import 'package:hervigen/Service/Font_Style.dart';
+import 'package:hervigen/Pages/menu.dart';
+import 'package:hervigen/Pages/register_pages.dart';
+import 'package:hervigen/Service/service_api.dart';
 import 'package:hervigen/widget/my_widget.dart';
 
 class AuthPagesLogin extends StatefulWidget {
@@ -16,6 +16,8 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +30,8 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.only(bottom: 15.0),
               child: Text(
-                "Login",
-                style: registerTitleStyle,
+                "Vigenesia",
+                style: boardStyle,
               ),
             ),
             // widget reusable => agar penggunaan widget lebih efisien
@@ -48,8 +50,16 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
                     ServiceApi()
                         .signIn(
                             usernameController.text, passwordController.text)
-                        .then((value) => Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => const Menu())));
+                        .then((value) => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => Menu(
+                                      idUser: value["data"]["iduser"],
+                                      email: value["data"]["email"],
+                                      nama: value["data"]["nama"],
+                                      password: value["data"]["password"],
+                                      profesi: value["data"]["profesi"],
+                                    ))));
                   },
                   child: const Text("Login")),
             ),
@@ -57,7 +67,7 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Belum punya akun? ",
+                  "Belum Punya Akun? ",
                   style: smallText,
                 ),
                 InkWell(
