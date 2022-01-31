@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/Pages/menu.dart';
 import 'package:hervigen/Pages/register_pages.dart';
-import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/Service/service_api.dart';
 import 'package:hervigen/widget/my_widget.dart';
 

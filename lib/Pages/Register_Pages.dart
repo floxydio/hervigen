@@ -1,10 +1,7 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/pages/login_pages.dart';
 import 'package:hervigen/widget/my_widget.dart';
-import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/service/Service_Api.dart';
 
 class RegisterPages extends StatefulWidget {

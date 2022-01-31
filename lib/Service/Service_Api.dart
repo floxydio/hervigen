@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -17,7 +15,9 @@ class ServiceApi {
           options: Options(headers: {'Content-type': 'application/json'}));
 
       if (response.statusCode == 200) {
-        print(response.data);
+        if (kDebugMode) {
+          print(response.data);
+        }
 
         return response.data;
       }
@@ -52,7 +52,9 @@ class ServiceApi {
       Response response =
           await dio.delete(baseURL + "api/dev/DELETEmotivasi", data: formData);
       if (response.statusCode == 200) {
-        print(response.data);
+        if (kDebugMode) {
+          print(response.data);
+        }
         return response.data;
       }
     } catch (e) {
@@ -69,7 +71,9 @@ class ServiceApi {
             contentType: Headers.formUrlEncodedContentType,
           ));
       if (response.statusCode == 200) {
-        print(response.data);
+        if (kDebugMode) {
+          print(response.data);
+        }
         return response.data;
       }
     } catch (e) {
@@ -134,3 +138,5 @@ class ServiceApi {
     }
   }
 }
+
+
