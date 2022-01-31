@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hervigen/pages/profile.dart';
-import 'package:hervigen/service/Service_Api.dart';
+import 'package:hervigen/Pages/Profile.dart';
+import 'package:hervigen/Service/Service_Api.dart';
 
 class Menu extends StatefulWidget {
   final dynamic idUser;

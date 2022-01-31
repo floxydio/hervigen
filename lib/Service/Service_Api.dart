@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 class ServiceApi {
   var baseURL = "http://vigenesia.org/";
 
-
   var dio = Dio();
 
   Future<dynamic> signIn(String email, String password) async {
@@ -27,11 +26,15 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> sendMotivation(String motivasi, dynamic idUser) async {
-    Map<String, dynamic> formData = {"isi_motivasi": motivasi, "iduser": idUser};
+  Future<dynamic> sendMotivation(String motivasi, String idUser) async {
+    Map<String, dynamic> formData = {
+      "isi_motivasi": motivasi,
+      "iduser": idUser
+    };
     try {
-      Response response =
-          await dio.post(baseURL + "api/dev/POSTmotivasi", data: formData);
+      Response response = await dio.post(baseURL + "api/dev/POSTmotivasi",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
 
       if (kDebugMode) {
         print("Respon -> ${response.data} + ${response.statusCode}");
@@ -83,10 +86,8 @@ class ServiceApi {
       Response response = await dio.get(baseURL + "api/Get_motivasi");
 
       if (response.statusCode == 200) {
-        if (kDebugMode) {
-          print(response.data);
-        }
-        return response.data as List;
+        print(response.data);
+        return response.data;
       }
     } catch (e) {
       throw Exception(e);
@@ -129,9 +130,7 @@ class ServiceApi {
           options: Options(contentType: Headers.formUrlEncodedContentType));
 
       if (response.statusCode == 200) {
-        if (kDebugMode) {
-          print("Respon Edit -> ${response.data}");
-        }
+        print("Respon Edit -> ${response.data}");
         return response.data;
       }
     } catch (e) {
