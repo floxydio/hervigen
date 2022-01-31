@@ -5,6 +5,7 @@ import 'package:hervigen/service/service_api.dart';
 import 'package:hervigen/widget/my_widget.dart';
 
 class MyProfile extends StatefulWidget {
+  // deklarasi parameter agar kita bisa menggunakan data yang dibawa pada screen sebelumnya
   final dynamic idUser;
   final String? email;
   final String? profesi;
@@ -24,9 +25,13 @@ class MyProfile extends StatefulWidget {
 }
 
 class _MyProfileState extends State<MyProfile> {
+  //digunakan untuk menyimpan nama input yang telah diisi pada textfield.
   TextEditingController namaController = TextEditingController();
+  //digunakan untuk menyimpan email input yang telah diisi pada textfield.
   TextEditingController emailController = TextEditingController();
+  //digunakan untuk menyimpan profesi input yang telah diisi pada textfield.
   TextEditingController profesiController = TextEditingController();
+  //digunakan untuk menyimpan password input yang telah diisi pada textfield.
   TextEditingController passwordController = TextEditingController();
 
   @override
@@ -49,6 +54,8 @@ class _MyProfileState extends State<MyProfile> {
                       child: Center(
                           child: Text("Vigenesia", style: boardWhiteStyle))),
                 ),
+                // MyInput => custom widget yang berfungsi sebagai reuseable widget agar penggunaan widget lebih efisien
+                // TextField nama
                 MyInput(
                   initialValue: widget.nama ?? "",
                   onChange: (value) {
@@ -56,6 +63,7 @@ class _MyProfileState extends State<MyProfile> {
                   },
                   label: "Nama",
                 ),
+                // TextField email
                 MyInput(
                   initialValue: widget.email ?? "",
                   label: "Email",
@@ -63,6 +71,7 @@ class _MyProfileState extends State<MyProfile> {
                     emailController.text = value;
                   },
                 ),
+                // TextField profesi
                 MyInput(
                   initialValue: widget.profesi ?? "",
                   label: "Profesi",
@@ -70,6 +79,7 @@ class _MyProfileState extends State<MyProfile> {
                     profesiController.text = value;
                   },
                 ),
+                // TextField password
                 MyInput(
                   initialValue: widget.password ?? "",
                   label: "Password",
@@ -80,6 +90,7 @@ class _MyProfileState extends State<MyProfile> {
                 ElevatedButton(
                     onPressed: () {
                       setState(() {
+                    // [put] api login digunakan disini untuk mengedit profil
                         ServiceApi()
                             .editProfile(
                                 widget.idUser,
@@ -91,6 +102,7 @@ class _MyProfileState extends State<MyProfile> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => Menu(
+                                      // parameter ini dibawa ke Menu agar kita bisa menggunakan data ini di page tersebut
                                           idUser: widget.idUser,
                                           email: widget.email,
                                           nama: widget.nama,

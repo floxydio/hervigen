@@ -4,6 +4,7 @@ import 'package:hervigen/Pages/Profile.dart';
 import 'package:hervigen/service/service_api.dart';
 
 class Menu extends StatefulWidget {
+  // deklarasi parameter agar kita bisa menggunakan data yang dibawa pada screen sebelumnya
   final dynamic idUser;
   final String? id;
   final String? email;
@@ -25,12 +26,14 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  //digunakan untuk menyimpan motivasi input yang telah diisi pada textfield.
   TextEditingController motivasiController = TextEditingController();
+  //digunakan sebagai penampung data yang di dapat pada api di initState
   List? dataMotivasi = [];
-  var motivasi = '';
 
   @override
   void initState() {
+    //[get] api motivasi di deklarasikan pada initState agar dijalankan pertama kali ketika screen dibuka.
     ServiceApi().motivasiList().then((value) => {
           dataMotivasi = [],
           setState(() {
@@ -54,6 +57,7 @@ class _MenuState extends State<Menu> {
                       context,
                       MaterialPageRoute(
                           builder: (_) => MyProfile(
+                                // parameter ini dibawa ke MyProfile agar kita bisa menggunakan data ini di page tersebut
                                 email: widget.email,
                                 idUser: widget.idUser,
                                 nama: widget.nama,
@@ -62,7 +66,8 @@ class _MenuState extends State<Menu> {
                               )));
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width /
+                      2, // lebar widget diambil dari lebar layar bagi 2
                   height: 65,
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.5, color: Colors.grey),
@@ -87,9 +92,11 @@ class _MenuState extends State<Menu> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.3,
+                        width: MediaQuery.of(context).size.width /
+                            1.3, // lebar widget diambil dari lebar layar bagi 1.3
                         child: TextFormField(
-                          controller: motivasiController,
+                          controller:
+                              motivasiController, // wajib menggunakan controller agar data input dapat tersimpan
                           decoration: InputDecoration(
                             hintText: "Posting motivasi",
                             border: OutlineInputBorder(
@@ -100,16 +107,12 @@ class _MenuState extends State<Menu> {
                       ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              if (kDebugMode) {
-                                print(widget.idUser);
-                              }
-                              if (kDebugMode) {
-                                print(motivasiController.text);
-                              }
+                              // [post] api motivasi digunakan disini, agar kita dapat mengirim data motivasi yang telah dibuat ke database
                               ServiceApi().sendMotivation(
                                   motivasiController.text, widget.idUser);
                               setState(() {
                                 motivasiController.text == "";
+                                // [get] api motivasi agar setelah mengirim data postingan motivasi kita dapat melihat data postingan motivasi terbaru
                                 ServiceApi()
                                     .motivasiList()
                                     .then((value) => {dataMotivasi = value});
@@ -118,6 +121,7 @@ class _MenuState extends State<Menu> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => Menu(
+                                            // parameter ini dibawa ke Menu agar kita bisa menggunakan data ini di page tersebut
                                             idUser: widget.idUser,
                                             email: widget.email,
                                             nama: widget.nama,
@@ -129,8 +133,12 @@ class _MenuState extends State<Menu> {
                           child: const Text("Post")),
                     ]),
               ),
+              // boolean condition
+              // jika dataMotivasi adalah kosong
               dataMotivasi!.isEmpty
+                  // maka kita akan menampilakn CircularProgressIndicator
                   ? const CircularProgressIndicator()
+                  // jika ada maka kita akan menampilkan data yang diambil dari [get] api motivasi
                   : Padding(
                       padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
                       child: ListView.builder(
@@ -148,6 +156,7 @@ class _MenuState extends State<Menu> {
                                 leading: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    // widget untuk menampilkan nomor urut pada list motivasi
                                     Text("${i + 1}"),
                                   ],
                                 ),
@@ -160,7 +169,6 @@ class _MenuState extends State<Menu> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          print(widget.id);
                                           AlertDialog alert = AlertDialog(
                                             scrollable: true,
                                             content: Column(
@@ -195,9 +203,7 @@ class _MenuState extends State<Menu> {
                                                 ElevatedButton(
                                                     onPressed: () async {
                                                       setState(() {
-                                                        print(dataMotivasi![i]
-                                                            ["id"]);
-
+                                                        // [put] api motivasi digunakan disini untuk fungsi mengedit motivasi
                                                         ServiceApi()
                                                             .editMotivation(
                                                                 motivasiController
@@ -215,6 +221,7 @@ class _MenuState extends State<Menu> {
                                                                     builder:
                                                                         (_) =>
                                                                             Menu(
+                                                                              // parameter ini dibawa ke Menu agar kita bisa menggunakan data ini di page tersebut
                                                                               idUser: widget.idUser,
                                                                               email: widget.email,
                                                                               nama: widget.nama,
@@ -242,6 +249,7 @@ class _MenuState extends State<Menu> {
                                       InkWell(
                                         onTap: () {
                                           setState(() {
+                                            // [delete] api motivasi digunakan disini untuk fungsi menghapus motivasi
                                             ServiceApi().deleteMotivation(
                                                 dataMotivasi![i]["id"]);
                                           });

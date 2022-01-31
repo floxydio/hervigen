@@ -2,10 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class ServiceApi {
+  // web hosting yang digunakan untuk mengambil api
   var baseURL = "http://vigenesia.org/";
 
   var dio = Dio();
 
+
+  // [post] api untuk login
   Future<dynamic> signIn(String email, String password) async {
     Map<String, dynamic> formData = {"email": email, "password": password};
 
@@ -26,6 +29,7 @@ class ServiceApi {
     }
   }
 
+  // [post] api untuk membuat postingan motivasi
   Future<dynamic> sendMotivation(String motivasi, dynamic idUser) async {
     Map<String, dynamic> formData = {
       "isi_motivasi": motivasi,
@@ -46,6 +50,7 @@ class ServiceApi {
     }
   }
 
+  // [delete] api untuk login
   Future<dynamic> deleteMotivation(dynamic id) async {
     Map<String, dynamic> formData = {"id": id};
     try {
@@ -63,6 +68,7 @@ class ServiceApi {
     }
   }
 
+  // [delete] api untuk menghapus postingan motivasi
   Future<dynamic> editMotivation(String motivasi, dynamic id) async {
     Map<String, dynamic> formData = {"isi_motivasi": motivasi, "id": id};
     try {
@@ -82,6 +88,7 @@ class ServiceApi {
     }
   }
 
+  // [get] api untuk menampilkan data postingan motivasi
   Future<List?> motivasiList() async {
     try {
       Response response = await dio.get(baseURL + "api/Get_motivasi");
@@ -97,6 +104,7 @@ class ServiceApi {
     }
   }
 
+  // [post] api untuk registrasi login
   Future<dynamic> signUp(
       String nama, String profesi, String email, String password) async {
     var formData = FormData.fromMap({
@@ -117,6 +125,7 @@ class ServiceApi {
     }
   }
 
+  // [put] api untuk mengubah data profil
   Future<dynamic> editProfile(dynamic idUser, String nama, String profesi,
       String email, String password) async {
     Map<String, dynamic> formData = {

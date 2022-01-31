@@ -12,10 +12,14 @@ class RegisterPages extends StatefulWidget {
 }
 
 class _RegisterPagesState extends State<RegisterPages> {
+  //digunakan untuk menyimpan nama input yang telah diisi pada textfield.
   TextEditingController namaController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  //digunakan untuk menyimpan email input yang telah diisi pada textfield.
   TextEditingController emailController = TextEditingController();
+  //digunakan untuk menyimpan profesi input yang telah diisi pada textfield.
   TextEditingController profesiController = TextEditingController();
+  //digunakan untuk menyimpan password input yang telah diisi pada textfield.
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +62,23 @@ class _RegisterPagesState extends State<RegisterPages> {
                   style: blueText,
                 ),
               ),
+              // MyInput => custom widget yang berfungsi sebagai reuseable widget agar penggunaan widget lebih efisien
+              // TextField nama
               MyInput(
                 controller: namaController,
                 label: "Nama",
               ),
+              // TextField profesi
               MyInput(
                 controller: profesiController,
                 label: "Profesi",
               ),
+              // TextField email
               MyInput(
                 controller: emailController,
                 label: "Email",
               ),
+              // TextField password
               MyInput(
                 controller: passwordController,
                 password: true,
@@ -77,6 +86,7 @@ class _RegisterPagesState extends State<RegisterPages> {
               ),
               ElevatedButton(
                   onPressed: () {
+                    // [post] api register digunakan disini untuk registrasi
                     ServiceApi()
                         .signUp(
                           namaController.text,
