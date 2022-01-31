@@ -13,10 +13,10 @@ class AuthPagesLogin extends StatefulWidget {
 }
 
 class _AuthPagesLoginState extends State<AuthPagesLogin> {
-  TextEditingController usernameController = TextEditingController();
+  //digunakan untuk menyimpan email input yang telah diisi pada textfield.
+  TextEditingController emailController = TextEditingController();
+  //digunakan untuk menyimpan password input yang telah diisi pada textfield.
   TextEditingController passwordController = TextEditingController();
-
-  //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +34,13 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
                 style: boardStyle,
               ),
             ),
-            // widget reusable => agar penggunaan widget lebih efisien
+            // MyInput => custom widget yang berfungsi sebagai reuseable widget agar penggunaan widget lebih efisien
+            // TextField email
             MyInput(
-              controller: usernameController,
+              controller: emailController,
               label: "Email",
             ),
+            // TextField password
             MyInput(
                 controller: passwordController,
                 label: "Password",
@@ -47,13 +49,14 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
               padding: const EdgeInsets.only(bottom: 10.0),
               child: ElevatedButton(
                   onPressed: () {
+                    // [post] api login digunakan disini sebagai validasi ke database untuk memastikan apakah data login yang di masukkan benar / salah
                     ServiceApi()
-                        .signIn(
-                            usernameController.text, passwordController.text)
+                        .signIn(emailController.text, passwordController.text)
                         .then((value) => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (_) => Menu(
+                                      // parameter ini dibawa ke Menu agar kita bisa menggunakan data ini di page tersebut
                                       idUser: value["data"]["iduser"],
                                       email: value["data"]["email"],
                                       nama: value["data"]["nama"],
@@ -67,7 +70,7 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Belum Punya Akun?",
+                  "Belum Punya Akun? ",
                   style: smallText,
                 ),
                 InkWell(
@@ -75,7 +78,7 @@ class _AuthPagesLoginState extends State<AuthPagesLogin> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => const RegisterPages()));
+                              builder: (_) => const RegisterPages())); 
                     },
                     child: Text("Daftar", style: blueText))
               ],

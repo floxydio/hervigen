@@ -4,7 +4,7 @@ class MyInput extends StatelessWidget {
   final String? label;
   final String? initialValue;
   final Function(String?)? onSaved;
-  final Function(String)? onChange;
+  final ValueChanged? onChange;
   final bool password;
   final TextEditingController? controller;
   const MyInput({

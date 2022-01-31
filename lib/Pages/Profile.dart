@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hervigen/Service/Font_Style.dart';
 import 'package:hervigen/Service/Service_Api.dart';
+import 'package:hervigen/pages/menu.dart';
+import 'package:hervigen/widget/my_widget.dart';
 
 class MyProfile extends StatefulWidget {
   final dynamic idUser;
@@ -27,6 +29,8 @@ class _MyProfileState extends State<MyProfile> {
   TextEditingController profesiController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  var nama = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,27 +38,61 @@ class _MyProfileState extends State<MyProfile> {
         title: Text("Vigenesia", style: boardWhiteStyle),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CircleAvatar(
-              backgroundColor: Colors.grey,
-              maxRadius: 25.0,
-              child: Icon(Icons.person, color: Colors.white),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Row(
-              children: [],
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  ServiceApi()
-                      .editProfile("670", "Dio", "Makan", "ds@d.com", "123");
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  maxRadius: 25.0,
+                  child: Icon(Icons.person, color: Colors.white),
+                ),
+              ),
+              MyInput(
+                initialValue: widget.nama ?? "",
+                onChange: (value) {
+                  namaController.text = value;
                 },
-                child: const Text("Edit"))
-          ],
+                label: "Nama",
+              ),
+              MyInput(
+                initialValue: widget.email ?? "",
+                label: "Email",
+                onChange: (value) {
+                  emailController.text = value;
+                },
+              ),
+              MyInput(
+                initialValue: widget.profesi ?? "",
+                label: "Profesi",
+                onChange: (value) {
+                  profesiController.text = value;
+                },
+              ),
+              MyInput(
+                initialValue: widget.password ?? "",
+                label: "Password",
+                onChange: (value) {
+                  passwordController.text = value;
+                },
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    ServiceApi()
+                        .editProfile(
+                            widget.idUser,
+                            namaController.text,
+                            profesiController.text,
+                            widget.email!,
+                            widget.password!)
+                        .then((value) => Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => const Menu())));
+                  },
+                  child: const Text("Edit"))
+            ],
+          ),
         ),
       ),
     );

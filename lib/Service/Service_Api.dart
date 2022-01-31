@@ -2,10 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class ServiceApi {
+  // web hosting yang digunakan untuk mengambil api
   var baseURL = "http://vigenesia.org/";
 
   var dio = Dio();
 
+
+  // [post] api untuk login
   Future<dynamic> signIn(String email, String password) async {
     Map<String, dynamic> formData = {"email": email, "password": password};
 
@@ -26,7 +29,8 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> sendMotivation(String motivasi, String idUser) async {
+  // [post] api untuk membuat postingan motivasi
+  Future<dynamic> sendMotivation(String motivasi, dynamic idUser) async {
     Map<String, dynamic> formData = {
       "isi_motivasi": motivasi,
       "iduser": idUser
@@ -46,11 +50,13 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> deleteMotivation(String id) async {
+  // [delete] api untuk login
+  Future<dynamic> deleteMotivation(dynamic id) async {
     Map<String, dynamic> formData = {"id": id};
     try {
-      Response response =
-          await dio.delete(baseURL + "api/dev/DELETEmotivasi", data: formData);
+      Response response = await dio.delete(baseURL + "api/dev/DELETEmotivasi",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
       if (response.statusCode == 200) {
         if (kDebugMode) {
           print(response.data);
@@ -62,7 +68,8 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> editMotivation(String motivasi, String id) async {
+  // [delete] api untuk menghapus postingan motivasi
+  Future<dynamic> editMotivation(String motivasi, dynamic id) async {
     Map<String, dynamic> formData = {"isi_motivasi": motivasi, "id": id};
     try {
       Response response = await dio.delete(baseURL + "api/dev/PUTmotivasi",
@@ -81,12 +88,15 @@ class ServiceApi {
     }
   }
 
+  // [get] api untuk menampilkan data postingan motivasi
   Future<List?> motivasiList() async {
     try {
       Response response = await dio.get(baseURL + "api/Get_motivasi");
 
       if (response.statusCode == 200) {
-        print(response.data);
+        if (kDebugMode) {
+          print(response.data);
+        }
         return response.data;
       }
     } catch (e) {
@@ -94,6 +104,7 @@ class ServiceApi {
     }
   }
 
+  // [post] api untuk registrasi login
   Future<dynamic> signUp(
       String nama, String profesi, String email, String password) async {
     var formData = FormData.fromMap({
@@ -114,11 +125,11 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> editProfile(
-      dynamic idUser,
-      String nama, String profesi, String email, String password) async {
+  // [put] api untuk mengubah data profil
+  Future<dynamic> editProfile(dynamic idUser, String nama, String profesi,
+      String email, String password) async {
     Map<String, dynamic> formData = {
-      "iduser" :idUser,
+      "iduser": idUser,
       "nama": nama,
       "profesi": profesi,
       "email": email,
@@ -130,7 +141,9 @@ class ServiceApi {
           options: Options(contentType: Headers.formUrlEncodedContentType));
 
       if (response.statusCode == 200) {
-        print("Respon Edit -> ${response.data}");
+        if (kDebugMode) {
+          print("Respon Edit -> ${response.data}");
+        }
         return response.data;
       }
     } catch (e) {

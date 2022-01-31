@@ -12,13 +12,15 @@ class RegisterPages extends StatefulWidget {
 }
 
 class _RegisterPagesState extends State<RegisterPages> {
+  //digunakan untuk menyimpan nama input yang telah diisi pada textfield.
   TextEditingController namaController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  //digunakan untuk menyimpan email input yang telah diisi pada textfield.
   TextEditingController emailController = TextEditingController();
+  //digunakan untuk menyimpan profesi input yang telah diisi pada textfield.
   TextEditingController profesiController = TextEditingController();
+  //digunakan untuk menyimpan password input yang telah diisi pada textfield.
+  TextEditingController passwordController = TextEditingController();
 
-  //digunakan untuk memberhentikan fungsi controller agar apk tidak berat
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,28 +53,32 @@ class _RegisterPagesState extends State<RegisterPages> {
                   style: registerTitleStyle,
                 ),
               ),
-             Container(
-               alignment: Alignment.topLeft,
-               width: MediaQuery.of(context).size.width,
-               padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-               child: Text("Setiap program menghubungkan data pengguna di program tersebut", style: blueText,),
-             ),
-              SizedBox(height: 15,),
+              Container(
+                alignment: Alignment.topLeft,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 15),
+                child: Text(
+                  "Setiap program menghubungkan data pengguna di program tersebut",
+                  style: blueText,
+                ),
+              ),
+              // MyInput => custom widget yang berfungsi sebagai reuseable widget agar penggunaan widget lebih efisien
+              // TextField nama
               MyInput(
                 controller: namaController,
                 label: "Nama",
               ),
-              SizedBox(height: 15,),
+              // TextField profesi
               MyInput(
                 controller: profesiController,
                 label: "Profesi",
               ),
-               SizedBox(height: 15,),
+              // TextField email
               MyInput(
                 controller: emailController,
                 label: "Email",
               ),
-               SizedBox(height: 15,),
+              // TextField password
               MyInput(
                 controller: passwordController,
                 password: true,
@@ -80,6 +86,7 @@ class _RegisterPagesState extends State<RegisterPages> {
               ),
               ElevatedButton(
                   onPressed: () {
+                    // [post] api register digunakan disini untuk registrasi
                     ServiceApi()
                         .signUp(
                           namaController.text,
