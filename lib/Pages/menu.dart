@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hervigen/Pages/Profile.dart';
 import 'package:hervigen/service/service_api.dart';
@@ -57,7 +58,9 @@ class _MenuState extends State<Menu> {
                       context,
                       MaterialPageRoute(
                           builder: (_) => MyProfile(
+
                                 // parameter ini dibawa ke MyProfile agar kita bisa menggunakan data ini di page tersebut
+
                                 email: widget.email,
                                 idUser: widget.idUser,
                                 nama: widget.nama,
@@ -68,6 +71,7 @@ class _MenuState extends State<Menu> {
                 child: Container(
                   width: MediaQuery.of(context).size.width /
                       2, // lebar widget diambil dari lebar layar bagi 2
+
                   height: 65,
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.5, color: Colors.grey),
@@ -97,6 +101,7 @@ class _MenuState extends State<Menu> {
                         child: TextFormField(
                           controller:
                               motivasiController, // wajib menggunakan controller agar data input dapat tersimpan
+
                           decoration: InputDecoration(
                             hintText: "Posting motivasi",
                             border: OutlineInputBorder(
@@ -108,6 +113,7 @@ class _MenuState extends State<Menu> {
                           onPressed: () {
                             setState(() {
                               // [post] api motivasi digunakan disini, agar kita dapat mengirim data motivasi yang telah dibuat ke database
+
                               ServiceApi().sendMotivation(
                                   motivasiController.text, widget.idUser);
                               setState(() {
@@ -258,6 +264,7 @@ class _MenuState extends State<Menu> {
                                             // [delete] api motivasi digunakan disini untuk fungsi menghapus motivasi
                                             ServiceApi().deleteMotivation(
                                                 dataMotivasi![i]["id"]);
+
                                           });
                                         },
                                         child: const Icon(Icons.delete),
