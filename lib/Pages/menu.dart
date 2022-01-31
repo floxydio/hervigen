@@ -5,6 +5,7 @@ import 'package:hervigen/service/service_api.dart';
 
 class Menu extends StatefulWidget {
   final dynamic idUser;
+  final String? id;
   final String? email;
   final String? profesi;
   final String? password;
@@ -12,6 +13,7 @@ class Menu extends StatefulWidget {
   const Menu(
       {Key? key,
       this.idUser,
+      this.id,
       this.email,
       this.profesi,
       this.password,
@@ -25,6 +27,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   TextEditingController motivasiController = TextEditingController();
   List? dataMotivasi = [];
+  var motivasi = '';
 
   @override
   void initState() {
@@ -45,53 +48,87 @@ class _MenuState extends State<Menu> {
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Column(children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => MyProfile(
-                                  email: widget.email,
-                                  idUser: widget.idUser,
-                                  nama: widget.nama,
-                                  password: widget.password,
-                                  profesi: widget.profesi,
-                                )));
-                  },
-                  child: const Text("Go TO Profile")),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  child: TextFormField(
-                    controller: motivasiController,
-                    decoration: InputDecoration(
-                      hintText: "Posting motivasi",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => MyProfile(
+                                email: widget.email,
+                                idUser: widget.idUser,
+                                nama: widget.nama,
+                                password: widget.password,
+                                profesi: widget.profesi,
+                              )));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: 65,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.5, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        maxRadius: 25,
+                        child: Icon(Icons.person, color: Colors.black),
+                      ),
+                      SizedBox(width: 10),
+                      Text("Profil saya"),
+                    ],
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        if (kDebugMode) {
-                          print(widget.idUser);
-                        }
-                        if (kDebugMode) {
-                          print(motivasiController.text);
-                        }
-                        ServiceApi().sendMotivation(
-                            motivasiController.text, widget.idUser);
-                        setState(() {
-                          motivasiController.text == "";
-                          ServiceApi()
-                              .motivasiList()
-                              .then((value) => {dataMotivasi = value});
-                        });
-                      });
-                    },
-                    child: const Text("Post")),
-              ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.3,
+                        child: TextFormField(
+                          controller: motivasiController,
+                          decoration: InputDecoration(
+                            hintText: "Posting motivasi",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              if (kDebugMode) {
+                                print(widget.idUser);
+                              }
+                              if (kDebugMode) {
+                                print(motivasiController.text);
+                              }
+                              ServiceApi().sendMotivation(
+                                  motivasiController.text, widget.idUser);
+                              setState(() {
+                                motivasiController.text == "";
+                                ServiceApi()
+                                    .motivasiList()
+                                    .then((value) => {dataMotivasi = value});
+                              });
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Menu(
+                                            idUser: widget.idUser,
+                                            email: widget.email,
+                                            nama: widget.nama,
+                                            password: widget.password,
+                                            profesi: widget.profesi,
+                                          )));
+                            });
+                          },
+                          child: const Text("Post")),
+                    ]),
+              ),
               dataMotivasi!.isEmpty
                   ? const CircularProgressIndicator()
                   : Padding(
@@ -123,7 +160,9 @@ class _MenuState extends State<Menu> {
                                     children: [
                                       InkWell(
                                         onTap: () {
+                                          print(widget.id);
                                           AlertDialog alert = AlertDialog(
+                                            scrollable: true,
                                             content: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -134,10 +173,14 @@ class _MenuState extends State<Menu> {
                                                       top: 10.0, bottom: 10.0),
                                                   child: TextFormField(
                                                     initialValue:
-                                                        motivasiController.text,
-                                                    maxLines: 8,
+                                                        dataMotivasi![i]
+                                                            ["isi_motivasi"],
+                                                    maxLines: 4,
                                                     onChanged: (value) {
-                                                      setState(() {});
+                                                      setState(() {
+                                                        motivasiController
+                                                            .text = value;
+                                                      });
                                                     },
                                                     decoration: InputDecoration(
                                                       border:
@@ -151,11 +194,34 @@ class _MenuState extends State<Menu> {
                                                 ),
                                                 ElevatedButton(
                                                     onPressed: () async {
-                                                      ServiceApi()
-                                                          .editMotivation(
-                                                              motivasiController
-                                                                  .text,
-                                                              widget.idUser);
+                                                      setState(() {
+                                                        print(dataMotivasi![i]
+                                                            ["id"]);
+
+                                                        ServiceApi()
+                                                            .editMotivation(
+                                                                motivasiController
+                                                                    .text,
+                                                                dataMotivasi![i]
+                                                                    ["id"])
+                                                            .then((value) => {
+                                                                  motivasiController =
+                                                                      value
+                                                                });
+                                                        Navigator
+                                                            .pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (_) =>
+                                                                            Menu(
+                                                                              idUser: widget.idUser,
+                                                                              email: widget.email,
+                                                                              nama: widget.nama,
+                                                                              password: widget.password,
+                                                                              profesi: widget.profesi,
+                                                                            )));
+                                                      });
                                                     },
                                                     child: const Text("Ubah"))
                                               ],
@@ -177,7 +243,7 @@ class _MenuState extends State<Menu> {
                                         onTap: () {
                                           setState(() {
                                             ServiceApi().deleteMotivation(
-                                                widget.idUser);
+                                                dataMotivasi![i]["id"]);
                                           });
                                         },
                                         child: const Icon(Icons.delete),

@@ -26,7 +26,7 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> sendMotivation(String motivasi, String idUser) async {
+  Future<dynamic> sendMotivation(String motivasi, dynamic idUser) async {
     Map<String, dynamic> formData = {
       "isi_motivasi": motivasi,
       "iduser": idUser
@@ -46,11 +46,12 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> deleteMotivation(String id) async {
+  Future<dynamic> deleteMotivation(dynamic id) async {
     Map<String, dynamic> formData = {"id": id};
     try {
-      Response response =
-          await dio.delete(baseURL + "api/dev/DELETEmotivasi", data: formData);
+      Response response = await dio.delete(baseURL + "api/dev/DELETEmotivasi",
+          data: formData,
+          options: Options(contentType: Headers.formUrlEncodedContentType));
       if (response.statusCode == 200) {
         if (kDebugMode) {
           print(response.data);
@@ -62,7 +63,7 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> editMotivation(String motivasi, String id) async {
+  Future<dynamic> editMotivation(String motivasi, dynamic id) async {
     Map<String, dynamic> formData = {"isi_motivasi": motivasi, "id": id};
     try {
       Response response = await dio.delete(baseURL + "api/dev/PUTmotivasi",
@@ -116,11 +117,10 @@ class ServiceApi {
     }
   }
 
-  Future<dynamic> editProfile(
-      dynamic idUser,
-      String nama, String profesi, String email, String password) async {
+  Future<dynamic> editProfile(dynamic idUser, String nama, String profesi,
+      String email, String password) async {
     Map<String, dynamic> formData = {
-      "iduser" :idUser,
+      "iduser": idUser,
       "nama": nama,
       "profesi": profesi,
       "email": email,
