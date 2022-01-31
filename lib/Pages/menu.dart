@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hervigen/Pages/Profile.dart';
 import 'package:hervigen/service/service_api.dart';
@@ -30,6 +29,7 @@ class _MenuState extends State<Menu> {
   TextEditingController motivasiController = TextEditingController();
   //digunakan sebagai penampung data yang di dapat pada api di initState
   List? dataMotivasi = [];
+  String? motivasiBaru;
 
   @override
   void initState() {
@@ -143,7 +143,7 @@ class _MenuState extends State<Menu> {
                       padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
                       child: ListView.builder(
                           physics: const ScrollPhysics(),
-                          itemCount: 10,
+                          itemCount: 25,
                           shrinkWrap: true,
                           itemBuilder: (context, i) {
                             return Container(
@@ -160,7 +160,10 @@ class _MenuState extends State<Menu> {
                                     Text("${i + 1}"),
                                   ],
                                 ),
-                                title: Text(dataMotivasi![i]["isi_motivasi"]),
+                                title: Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Text(dataMotivasi![i]["isi_motivasi"]),
+                                ),
                                 subtitle: Padding(
                                   padding: const EdgeInsets.only(
                                       top: 15.0, bottom: 15.0),
@@ -169,6 +172,7 @@ class _MenuState extends State<Menu> {
                                     children: [
                                       InkWell(
                                         onTap: () {
+                                          print(dataMotivasi![i]["id"]);
                                           AlertDialog alert = AlertDialog(
                                             scrollable: true,
                                             content: Column(
@@ -186,8 +190,10 @@ class _MenuState extends State<Menu> {
                                                     maxLines: 4,
                                                     onChanged: (value) {
                                                       setState(() {
-                                                        motivasiController
-                                                            .text = value;
+                                                        motivasiBaru = value;
+                                                        dataMotivasi![i][
+                                                                "isi_motivasi"] =
+                                                            motivasiBaru;
                                                       });
                                                     },
                                                     decoration: InputDecoration(
@@ -206,10 +212,10 @@ class _MenuState extends State<Menu> {
                                                         // [put] api motivasi digunakan disini untuk fungsi mengedit motivasi
                                                         ServiceApi()
                                                             .editMotivation(
-                                                                motivasiController
-                                                                    .text,
+                                                                motivasiBaru!,
                                                                 dataMotivasi![i]
-                                                                    ["id"])
+                                                                    ["id"]
+                                                                    )
                                                             .then((value) => {
                                                                   motivasiController =
                                                                       value
