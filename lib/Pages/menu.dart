@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hervigen/pages/profile.dart';
-import 'package:hervigen/service/service_api.dart';
+import 'package:hervigen/service/Service_Api.dart';
 
 class Menu extends StatefulWidget {
   final dynamic idUser;
@@ -45,53 +45,77 @@ class _MenuState extends State<Menu> {
           child: Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Column(children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => MyProfile(
-                                  email: widget.email,
-                                  idUser: widget.idUser,
-                                  nama: widget.nama,
-                                  password: widget.password,
-                                  profesi: widget.profesi,
-                                )));
-                  },
-                  child: const Text("Go TO Profile")),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 1.3,
-                  child: TextFormField(
-                    controller: motivasiController,
-                    decoration: InputDecoration(
-                      hintText: "Posting motivasi",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                    ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => MyProfile(
+                                email: widget.email,
+                                idUser: widget.idUser,
+                                nama: widget.nama,
+                                password: widget.password,
+                                profesi: widget.profesi,
+                              )));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: 65,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 0.5, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        maxRadius: 25,
+                        child: Icon(Icons.person, color: Colors.black),
+                      ),
+                      SizedBox(width: 10),
+                      Text("Profil saya"),
+                    ],
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        if (kDebugMode) {
-                          print(widget.idUser);
-                        }
-                        if (kDebugMode) {
-                          print(motivasiController.text);
-                        }
-                        ServiceApi().sendMotivation(
-                            motivasiController.text, widget.idUser);
-                        setState(() {
-                          motivasiController.text == "";
-                          ServiceApi()
-                              .motivasiList()
-                              .then((value) => {dataMotivasi = value});
-                        });
-                      });
-                    },
-                    child: const Text("Post")),
-              ]),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.3,
+                        child: TextFormField(
+                          controller: motivasiController,
+                          decoration: InputDecoration(
+                            hintText: "Posting motivasi",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              if (kDebugMode) {
+                                print(widget.idUser);
+                              }
+                              if (kDebugMode) {
+                                print(motivasiController.text);
+                              }
+                              ServiceApi().sendMotivation(
+                                  motivasiController.text, widget.idUser);
+                              setState(() {
+                                motivasiController.text == "";
+                                ServiceApi()
+                                    .motivasiList()
+                                    .then((value) => {dataMotivasi = value});
+                              });
+                            });
+                          },
+                          child: const Text("Post")),
+                    ]),
+              ),
               dataMotivasi!.isEmpty
                   ? const CircularProgressIndicator()
                   : Padding(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hervigen/pages/menu.dart';
 import 'package:hervigen/service/font_style.dart';
-import 'package:hervigen/service/service_api.dart';
+import 'package:hervigen/service/Service_Api.dart';
 import 'package:hervigen/widget/my_widget.dart';
 
 class MyProfile extends StatefulWidget {
