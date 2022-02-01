@@ -58,7 +58,6 @@ class _MenuState extends State<Menu> {
                       context,
                       MaterialPageRoute(
                           builder: (_) => MyProfile(
-
                                 // parameter ini dibawa ke MyProfile agar kita bisa menggunakan data ini di page tersebut
 
                                 email: widget.email,
@@ -220,8 +219,7 @@ class _MenuState extends State<Menu> {
                                                             .editMotivation(
                                                                 motivasiBaru!,
                                                                 dataMotivasi![i]
-                                                                    ["id"]
-                                                                    )
+                                                                    ["id"])
                                                             .then((value) => {
                                                                   motivasiController =
                                                                       value
@@ -264,7 +262,6 @@ class _MenuState extends State<Menu> {
                                             // [delete] api motivasi digunakan disini untuk fungsi menghapus motivasi
                                             ServiceApi().deleteMotivation(
                                                 dataMotivasi![i]["id"]);
-
                                           });
                                         },
                                         child: const Icon(Icons.delete),

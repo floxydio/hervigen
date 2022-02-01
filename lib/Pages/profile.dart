@@ -96,18 +96,18 @@ class _MyProfileState extends State<MyProfile> {
                                 widget.idUser,
                                 namaController.text,
                                 profesiController.text,
-                                widget.email!,
-                                widget.password!)
+                                emailController.text,
+                                passwordController.text)
                             .then((value) => Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => Menu(
                                       // parameter ini dibawa ke Menu agar kita bisa menggunakan data ini di page tersebut
                                           idUser: widget.idUser,
-                                          email: widget.email,
-                                          nama: widget.nama,
-                                          password: widget.password,
-                                          profesi: widget.profesi,
+                                          email: emailController.text,
+                                          nama: namaController.text,
+                                          password: passwordController.text,
+                                          profesi: profesiController.text,
                                         ))));
                       });
                     },
