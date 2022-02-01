@@ -72,7 +72,7 @@ class ServiceApi {
   Future<dynamic> editMotivation(String motivasi, dynamic id) async {
     Map<String, dynamic> formData = {"isi_motivasi": motivasi, "id": id};
     try {
-      Response response = await dio.delete(baseURL + "api/dev/PUTmotivasi",
+      Response response = await dio.put(baseURL + "api/dev/PUTmotivasi",
           data: formData,
           options: Options(
             contentType: Headers.formUrlEncodedContentType,
